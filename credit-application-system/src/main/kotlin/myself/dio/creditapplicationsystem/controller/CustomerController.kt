@@ -24,9 +24,9 @@ class CustomerController (
 ){
 
     @PostMapping
-    fun saveCustomer(customerDto: CustomerDto): ResponseEntity<String>{
+    fun saveCustomer(@RequestBody customerDto: CustomerDto): ResponseEntity<String>{
         val savedCustomer = this.customerService.save(customerDto.toEntity())
-        return ResponseEntity.status(HttpStatus.CREATED).body("Customer ${customerDto.email} saved!")
+        return ResponseEntity.status(HttpStatus.CREATED).body("Customer ${savedCustomer.email} saved!")
     }
 
     @GetMapping("/{id}")
@@ -35,7 +35,7 @@ class CustomerController (
         return ResponseEntity.status(HttpStatus.OK).body(CustomerView(customer))
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     fun deleteCustomer(@PathVariable id: Long) = this.customerService.delete(id)
 
     @PatchMapping
